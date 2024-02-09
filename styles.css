@@ -1,0 +1,65 @@
+h1 {
+    text-align: center;
+  }
+   
+  #formulario-jugadores {
+    margin: 20px auto;
+    max-width: 500px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+  
+  h2 {
+    margin-bottom: 10px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  #tamano-carton{
+    width: 40px;
+  }
+  
+  #boton-iniciar, #boton-ranking {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #000;
+    border: 1px solid #000;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #boton-ranking {
+    margin-left: 20px;
+  }
+
+
+  .formulario-visible {
+    display: block;
+  }
+  
+  .formulario-oculto {
+    display: none;
+  }
+
+  .form {
+    margin: 20px auto;
+    max-width: 500px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
