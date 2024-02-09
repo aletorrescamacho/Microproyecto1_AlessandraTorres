@@ -3,6 +3,20 @@ const botonIniciar = document.getElementById('boton-iniciar');
 const botonR = document.getElementById('boton-ranking');
 
 
+function ocultarFormulario() {
+  const formulario = document.getElementById('formulario-jugadores');
+  formulario.classList.remove("formulario-visible");
+  formulario.classList.add("formulario-oculto");
+  return false;
+}
+
+// Muestra el boton para sacar el numero
+function mostrarBotonNum() {
+  const botonSacarNum = document.getElementById('boton-sacarnum');
+  botonSacarNum.classList.remove("formulario-oculto");
+  botonSacarNum.classList.add("formulario-visible");
+  return false;
+}
 
 // Función para validar si todos los campos están llenos
 function todosLosCamposLlenos() {
@@ -58,6 +72,7 @@ botonIniciar.addEventListener('click', () => {
         ronda: 0 }
     ]
     window.alert(infopartida[0].nombre);
+    mostrarBotonNum()
 });
 
 
@@ -67,6 +82,8 @@ activarBotonIniciar();
 
 // Evento para detectar cambios en los campos del formulario
 formularioJugadores.addEventListener('change', activarBotonIniciar)
+
+
 
 
 

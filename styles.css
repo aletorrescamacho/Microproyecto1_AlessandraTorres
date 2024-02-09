@@ -31,7 +31,7 @@ h1 {
     width: 40px;
   }
   
-  #boton-iniciar, #boton-ranking {
+  #boton-iniciar, #boton-ranking, #boton-sacarnum {
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 16px;
@@ -47,13 +47,10 @@ h1 {
     margin-left: 20px;
   }
 
-
-  .formulario-visible {
-    display: block;
-  }
-  
-  .formulario-oculto {
-    display: none;
+  #boton-sacarnum {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .form {
@@ -63,3 +60,12 @@ h1 {
     border: 1px solid #ccc;
     border-radius: 10px;
   }
+
+  .formulario-visible {
+    display: block;
+  }
+  
+  .formulario-oculto {
+    display: none;
+  }
+
