@@ -1,6 +1,14 @@
 const formularioJugadores = document.getElementById('formulario-jugadores');
 const botonIniciar = document.getElementById('boton-iniciar');
 const botonR = document.getElementById('boton-ranking');
+const botonJug1 = document.getElementById('boton-jugador1');
+const botonJug2 = document.getElementById('boton-jugador2');
+const botonJug3 = document.getElementById('boton-jugador3');
+const botonJug4 = document.getElementById('boton-jugador4');
+const items = document.getElementById('game');
+infojugadores = 0;
+tamanoCarton = 0;
+
 
 
 
@@ -72,46 +80,11 @@ function activarBotonIniciar() {
 }
 
 
-// Evento para iniciar la partida
-botonIniciar.addEventListener('click', () => {
-    nombres = obtenerNombresJugadores()
-    window.alert(nombres);
-    infopartida = [
-        { nombre: nombres[0],
-        puntaje: 0,
-        ronda: 0 },
-        { nombre: nombres[1],
-        puntaje: 0,
-        ronda: 0 },
-        { nombre: nombres[2],
-        puntaje: 0,
-        ronda: 0 },
-        { nombre: nombres[3],
-        puntaje: 0,
-        ronda: 0 }
-    ]
-    window.alert(infopartida[0].nombre);
-    mostrarBotonNum()
-    mostrar()
-    tamanoCarton = formularioJugadores.querySelector("#tamano-carton");
-    Cartones = generarCartones(tamanoCarton.value);
-    mostrar2(document.getElementById('contenedor-juego'));
-    
-});
-
-
-
-activarBotonIniciar();
-
-
-// Evento para detectar cambios en los campos del formulario
-formularioJugadores.addEventListener('change', activarBotonIniciar)
-
 
 numeroRonda = 0;
 //arrnumeros25 = [];
 
-function changeText(){
+function changeNum(){
   if(numeroRonda<25){
   numeroRonda++;
   document.getElementById('numero-ronda').innerHTML = numeroRonda;
@@ -189,20 +162,249 @@ function generarCartones(tamanoCarton){
   return arrVal4Cartones;
 }
 
+fil = [];
+colum = [];
+diag = []
 
+function generarfilcoldiag(tamanoCarton, infojugadores){
+  for( var i=0; i< 4; i++){
+    jug = infojugadores[i];
+    c = infojugadores[i].Cartonjug;
+    if (tamanoCarton == 3){
+      fil = [[c[0], c[1], c[2]], [c[3], c[4], c[5]], [c[6], c[7], c[8]]]
+      colum = [[c[0], c[3], c[6]], [c[1], c[4], c[7]], [c[2], c[5], c[8]]]
+      diag = [[c[0], c[4], c[8]], [c[6], c[4], c[2]]] 
+      infojugadores[i].filas = fil;
+      infojugadores[i].columnas = colum;
+      infojugadores[i].diagonales = diag;
+    }
+    if (tamanoCarton == 4){
+      fil = [[c[0], c[1], c[2], c[3]], [c[4], c[5], c[6], c[7]], [c[8], c[9], c[10], c[11]], [c[12], c[13], c[14], c[15]],]
+      colum = [[c[0], c[4], c[8], c[12]], [c[1], c[5], c[9], c[13]], [c[2], c[6], c[10], c[14]], [c[3], c[7], c[11], c[15]] ]
+      diag = [[c[0], c[5], c[10], c[15]], [c[12], c[9], c[6], c[3]] ]
+      infojugadores[i].filas = fil;
+      infojugadores[i].columnas = colum;
+      infojugadores[i].diagonales = diag;
+    }
+    if (tamanoCarton == 5){
+      fil = []
+      colum = []
+      diag = []
+      infojugadores[i].filas = fil;
+      infojugadores[i].columnas = colum;
+      infojugadores[i].diagonales = diag;
+      
+  }
+}
+
+}
+/* NO FUNCIONA ARREGLAR
+
+function sumarpunt(infojugadores, tamanoCarton){
+  for( var i=0; i< 4; i++){
+    jug = infojugadores[i];
+    for( var k=0; k< tamanoCarton; k++){
+      fil= infojugadores[i].filas[k];
+      colum = infojugadores[i].columnas[k];
+      sumFil = fil.reduce((a, b) => a + b, 0);
+      sumColum = colum.reduce((a, b) => a + b, 0);
+      if(sumFil == 0){
+        infojugadores[i].puntaje = infojugadores[i].puntaje + 1; 
+      }
+      if(sumColum == 0){
+        infojugadores[i].puntaje = infojugadores[i].puntaje + 1; 
+      }
+    }
+    for( var j=0; j<2; j++){
+      diag = infojugadores[i].diagonales;
+      sumDiag = diag.reduce((a, b) => a + b, 0);
+      if(sumDiag == 0){
+        infojugadores[i].puntaje = infojugadores[i].puntaje + 3; 
+      }
+
+    }
+    
+    sumTot = infojugadores[i].Cartonjug.reduce((a, b) => a + b, 0);
+    if (sumTot == 0){
+      infojugadores[i].puntaje = infojugadores[i].puntaje + 5; 
+    }
+
+  }
+
+}
+*/
+
+
+
+// Evento para iniciar la partida
+botonIniciar.addEventListener('click', () => {
+    nombres = obtenerNombresJugadores()
+    window.alert(nombres);
+    mostrarBotonNum()
+    mostrar()
+    tamanoCarton = formularioJugadores.querySelector("#tamano-carton");
+    Cartones = generarCartones(tamanoCarton.value);
+    mostrar2(document.getElementById('contenedor-juego'));
+    mostrar2(document.getElementById('ver-cartones-contenedor'))
+    infojugadores = [{nam: nombres[0],
+    puntaje: 0, 
+    Cartonjug: Cartones[0], 
+    diagonales: 0,
+    filas: 0,
+    columnas: 0}, 
+    {nam: nombres[1],
+    puntaje: 0, 
+    Cartonjug: Cartones[1], 
+    diagonales: 0,
+    filas: 0,
+    columnas: 0}, 
+    {nam: nombres[2],
+    puntaje: 0, 
+    Cartonjug: Cartones[2], 
+    diagonales: 0,
+    filas: 0,
+    columnas: 0}, 
+    {nam: nombres[3],
+    puntaje: 0, 
+    Cartonjug: Cartones[3], 
+    diagonales: 0,
+    filas: 0,
+    columnas: 0}]
+    generarfilcoldiag(tamanoCarton.value, infojugadores)
+    
+});
+
+
+
+
+
+activarBotonIniciar();
+
+
+// Evento para detectar cambios en los campos del formulario
+formularioJugadores.addEventListener('change', activarBotonIniciar)
+
+function generarCartonVisual(numerosCarton){
+  if (numerosCarton.length == 9){
+    for( var i=0; i< numerosCarton.length; i++){
+      
+      let box = document.createElement('div');
+      box.className = 'item1';
+      box.innerHTML = numerosCarton[i];
+      document.querySelector('.game').appendChild(box);
+  
+    }
+  } 
+  if(numerosCarton.length == 16){
+    for( var i=0; i< numerosCarton.length; i++){
+      let box = document.createElement('div');
+      box.className = 'item2';
+      box.innerHTML = numerosCarton[i];
+      document.querySelector('.game').appendChild(box);
+  }
+}
+  if(numerosCarton.length == 25){
+    for( var i=0; i< numerosCarton.length; i++){
+      let box = document.createElement('div');
+      box.className = 'item3';
+      box.innerHTML = numerosCarton[i];
+      document.querySelector('.game').appendChild(box);
+  }
+  }
+}
+
+
+j1 = false;
+j2 = false;  
+j3 = false;
+j4 = false;  
 
 //Cuando se da click se guarda el numero en un variable numB
 botonSacarNum.addEventListener('click', () => {
-  changeText();
-  window.alert(numerosAleatorios);
+  changeNum();;
   numB = numeroGenerado();
-  window.alert(tamanoCarton.value);
+  for (var i=0; i< 4; i++){
+    persona = infojugadores[i]
+    for (var k=0; k<persona.Cartonjug.length; k++){
+      if(persona.Cartonjug[k]==numB){
+        persona.Cartonjug[k]='0';
+        k=persona.Cartonjug.length;
+      }
+    }
+    sumarpunt(infojugadores, tamanoCarton.value)
+  }
 
-  window.alert(Cartones[0]);
-  window.alert(Cartones[1]);
-  window.alert(Cartones[2]);
-  window.alert(Cartones[3]);
+
+  if(j1==true){
+    document.querySelector(".game").innerHTML = '';
+    generarCartonVisual(infojugadores[0].Cartonjug);
+    
+  }
+  if(j2==true){
+    document.querySelector(".game").innerHTML = '';
+    generarCartonVisual(infojugadores[1].Cartonjug);
+  }
+  if(j3==true){
+    document.querySelector(".game").innerHTML = '';
+    generarCartonVisual(infojugadores[2].Cartonjug);
+  }
+  if(j4==true){
+    document.querySelector(".game").innerHTML = '';
+    generarCartonVisual(infojugadores[3].Cartonjug);
+  }
+
+
 
 });
 
 
+
+ 
+
+
+
+botonJug1.addEventListener('click', () => {
+  j1 = true;
+  j2 = false;  
+  j3 = false;
+  j4 = false;  
+  document.getElementById('nombre-jug').innerHTML = infojugadores[0].nam;
+  document.querySelector(".game").innerHTML = '';
+  document.getElementById('numero-puntaje').innerHTML = infojugadores[0].puntaje;
+  generarCartonVisual(infojugadores[0].Cartonjug);
+});
+
+
+botonJug2.addEventListener('click', () => {
+  j1 = false;
+  j2 = true;  
+  j3 = false;
+  j4 = false;  
+  document.getElementById('nombre-jug').innerHTML = infojugadores[1].nam;
+  document.querySelector(".game").innerHTML = '';
+  document.getElementById('numero-puntaje').innerHTML = infojugadores[1].puntaje
+  generarCartonVisual(infojugadores[1].Cartonjug)
+});
+
+botonJug3.addEventListener('click', () => {
+  j1 = false;
+  j2 = false;  
+  j3 = true;
+  j4 = false;  
+  document.getElementById('nombre-jug').innerHTML = infojugadores[2].nam;
+  document.querySelector(".game").innerHTML = '';
+  document.getElementById('numero-puntaje').innerHTML = infojugadores[2].puntaje
+  generarCartonVisual(infojugadores[2].Cartonjug)
+});
+
+botonJug4.addEventListener('click', () => {
+  j1 = false;
+  j2 = false;  
+  j3 = false;
+  j4 = true; 
+  document.getElementById('nombre-jug').innerHTML = infojugadores[3].nam;
+  document.querySelector(".game").innerHTML = '';
+  document.getElementById('numero-puntaje').innerHTML = infojugadores[3].puntaje
+  generarCartonVisual(infojugadores[3].Cartonjug)
+});
+  

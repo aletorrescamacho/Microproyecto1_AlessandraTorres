@@ -31,7 +31,7 @@ h1 {
     width: 40px;
   }
   
-  #boton-iniciar, #boton-ranking, #boton-sacarnum {
+  #boton-iniciar, #boton-ranking, #boton-sacarnum, #boton-jugador1, #boton-jugador2, #boton-jugador3, #boton-jugador4 {
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 16px;
@@ -98,7 +98,7 @@ h1 {
 
   }
 
-  #numero-ronda, #titulo-ronda, #titulo-puntaje, #numero-puntaje{
+  #numero-ronda, #titulo-ronda, #titulo-puntaje, #numero-puntaje, #ver-cartones-contenedor{
     display: flex;
     margin: auto;
   }
@@ -109,12 +109,15 @@ h1 {
   }
 
   @media screen and (max-width: 600px) {
-    .pinkbox {
-      position: absolute;
+    .pinkbox, #ver-cartones-contenedor {
+    position: absolute;
     left: 50%;
     transform: translateX(-50%);
     }
   }
+
+
+
 
   
   #contenedor-juego {
@@ -132,10 +135,94 @@ h1 {
 
   #a {
     position: fixed;
-    top: 100x;
+    top: 70px;
     left: 70%;
     background-color: rgb(233, 210, 214);
     width: 150px;
     color: #8d1456;
     border: 1px solid #8d1456;
   }
+
+  #ver-cartones-contenedor{
+    display: grid;
+    position: fixed;
+    left: 70%;
+    background-color: rgb(233, 210, 214);
+    width: 150px;
+    padding: 10px;
+    color: #8d1456;
+    border: 1px solid #8d1456;
+    height: 300px;
+    width: 150px;
+    top: 170px;
+
+  }
+
+  body {
+    overflow: scroll;
+    height: 100%;
+    width: 100%;
+  }
+
+  .container{
+    position: fixed;
+    left: 40%;
+    top: 80px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background-color: beige;
+    padding: 40px 40px;
+  }
+
+  .game{
+    width: 200px;
+    height: 200px;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    transform-style: preserve-3d;
+    perspective: 500px;
+  }
+
+  .item1{
+
+    position: relative;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    background-color: #c26b9b;
+  }
+
+  .item2{
+
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    background-color: #c26b9b;
+  }
+
+  .item3{
+
+    position: relative;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    background-color: #c26b9b;
+  }
+
+
