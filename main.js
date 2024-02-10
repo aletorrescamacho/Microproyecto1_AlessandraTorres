@@ -7,8 +7,7 @@ const botonJug3 = document.getElementById('boton-jugador3');
 const botonJug4 = document.getElementById('boton-jugador4');
 const items = document.getElementById('game');
 infojugadores = 0;
-tamanoCarton = 0;
-
+cartonCompleto = false;
 
 
 
@@ -68,6 +67,12 @@ function mostrar2(n) {
   return false;
 }
 
+function Ocultar(n) {
+  n.classList.add("formulario-oculto");
+  n.classList.remove("formulario-visible");
+  return false;
+}
+
 // Función para activar o desactivar el botón de iniciar partida
 function activarBotonIniciar() {
   if (todosLosCamposLlenos()) {
@@ -92,6 +97,15 @@ function changeNum(){
   else{
     document.getElementById('numero-ronda').innerHTML = "";
     document.getElementById('titulo-ronda').innerHTML = "Partida terminada";
+    Ocultar(document.getElementById('boton-sacarnum'))
+
+    if(cartonCompleto){
+      document.getElementById('numero-ronda').innerHTML = "";
+      document.getElementById('titulo-ronda').innerHTML = "Partida terminada";
+      Ocultar(document.getElementById('boton-sacarnum'))
+  
+      
+    }
   }
 
 }
@@ -162,6 +176,7 @@ function generarCartones(tamanoCarton){
   return arrVal4Cartones;
 }
 
+
 fil = [];
 colum = [];
 diag = []
@@ -181,58 +196,85 @@ function generarfilcoldiag(tamanoCarton, infojugadores){
     if (tamanoCarton == 4){
       fil = [[c[0], c[1], c[2], c[3]], [c[4], c[5], c[6], c[7]], [c[8], c[9], c[10], c[11]], [c[12], c[13], c[14], c[15]],]
       colum = [[c[0], c[4], c[8], c[12]], [c[1], c[5], c[9], c[13]], [c[2], c[6], c[10], c[14]], [c[3], c[7], c[11], c[15]] ]
-      diag = [[c[0], c[5], c[10], c[15]], [c[12], c[9], c[6], c[3]] ]
+      diag = [[c[0], c[5], c[10], c[15]], [c[12], c[9], c[6], c[15]] ]
       infojugadores[i].filas = fil;
       infojugadores[i].columnas = colum;
       infojugadores[i].diagonales = diag;
     }
     if (tamanoCarton == 5){
-      fil = []
-      colum = []
-      diag = []
+      fil = [[c[0], c[1], c[2], c[3], c[4]], [c[5], c[6], c[7], c[8], c[9]], [c[10], c[11], c[12], c[13], c[14]], [c[15], c[16], c[17], c[18], c[19]], [c[20], c[21], c[22], c[23], c[24]]]
+      colum = [[c[0], c[5], c[10], c[15], c[20]], [c[1], c[6], c[11], c[16], c[21]], [c[2], c[7], c[12], c[17], c[22]], [c[3], c[8], c[13], c[18], c[23]], [c[4], c[9], c[14], c[19], c[24]] ]
+      diag = [[c[0], c[6], c[12], c[18], c[24]], [c[20], c[16], c[12], c[8], c[4]]]
       infojugadores[i].filas = fil;
       infojugadores[i].columnas = colum;
       infojugadores[i].diagonales = diag;
       
   }
-}
+  }
+  return infojugadores;
 
 }
-/* NO FUNCIONA ARREGLAR
 
-function sumarpunt(infojugadores, tamanoCarton){
-  for( var i=0; i< 4; i++){
-    jug = infojugadores[i];
+function todosIguales(array) {
+  for (let i = 1; i < array.length; i++) {
+    if (array[i] !== array[0]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function filaBingo(jug1filas, tamanoCarton){
+
+  num = 0;
     for( var k=0; k< tamanoCarton; k++){
-      fil= infojugadores[i].filas[k];
-      colum = infojugadores[i].columnas[k];
-      sumFil = fil.reduce((a, b) => a + b, 0);
-      sumColum = colum.reduce((a, b) => a + b, 0);
-      if(sumFil == 0){
-        infojugadores[i].puntaje = infojugadores[i].puntaje + 1; 
-      }
-      if(sumColum == 0){
-        infojugadores[i].puntaje = infojugadores[i].puntaje + 1; 
-      }
-    }
-    for( var j=0; j<2; j++){
-      diag = infojugadores[i].diagonales;
-      sumDiag = diag.reduce((a, b) => a + b, 0);
-      if(sumDiag == 0){
-        infojugadores[i].puntaje = infojugadores[i].puntaje + 3; 
-      }
+      if(todosIguales(jug1filas[k])){
+        num = num + 1;
 
+      }
     }
-    
-    sumTot = infojugadores[i].Cartonjug.reduce((a, b) => a + b, 0);
-    if (sumTot == 0){
-      infojugadores[i].puntaje = infojugadores[i].puntaje + 5; 
-    }
-
+    return num;
   }
 
-}
-*/
+function columBingo(jug1colum, tamanoCarton){
+
+  num = 0;
+    for( var k=0; k< tamanoCarton; k++){
+      if(todosIguales(jug1colum[k])){
+        num = num + 1;
+
+      }
+    }
+    return num;
+  }
+
+  function diagBingo(jug1diag, tamanoCarton){
+
+    num = 0;
+      for( var k=0; k< 2; k++){
+        if(todosIguales(jug1diag[k])){
+          num = num + 3;
+  
+        }
+      }
+      return num;
+    }
+
+    function llenoBingo(Cartonjug, tamanoCarton,cartonCompleto){
+      cartonCompleto = false
+      num = 0;
+        for( var k=0; k< tamanoCarton*tamanoCarton; k++){
+          if(todosIguales(Cartonjug[k])){
+            cartonCompleto=true;
+
+    
+          }
+          return cartonCompleto;
+        }
+
+      }
+  
+
 
 
 
@@ -246,31 +288,41 @@ botonIniciar.addEventListener('click', () => {
     Cartones = generarCartones(tamanoCarton.value);
     mostrar2(document.getElementById('contenedor-juego'));
     mostrar2(document.getElementById('ver-cartones-contenedor'))
+    mostrar2(document.getElementById('boton-reiniciar'))
     infojugadores = [{nam: nombres[0],
     puntaje: 0, 
     Cartonjug: Cartones[0], 
-    diagonales: 0,
-    filas: 0,
-    columnas: 0}, 
+    diagonales: [],
+    filas: [],
+    columnas: []}, 
     {nam: nombres[1],
     puntaje: 0, 
     Cartonjug: Cartones[1], 
-    diagonales: 0,
-    filas: 0,
-    columnas: 0}, 
+    diagonales: [],
+    filas: [],
+    columnas: []}, 
     {nam: nombres[2],
     puntaje: 0, 
     Cartonjug: Cartones[2], 
-    diagonales: 0,
-    filas: 0,
-    columnas: 0}, 
+    diagonales: [],
+    filas: [],
+    columnas: []}, 
     {nam: nombres[3],
     puntaje: 0, 
     Cartonjug: Cartones[3], 
-    diagonales: 0,
-    filas: 0,
-    columnas: 0}]
-    generarfilcoldiag(tamanoCarton.value, infojugadores)
+    diagonales: [],
+    filas: [],
+    columnas: []}]
+
+    infojugadores = generarfilcoldiag(tamanoCarton.value, infojugadores)
+
+
+    numeros = infojugadores[0].filas[0], suma = 0;
+    numeros.forEach (function(numero){
+        suma += numero;
+    });
+
+
     
 });
 
@@ -280,6 +332,18 @@ botonIniciar.addEventListener('click', () => {
 
 activarBotonIniciar();
 
+g1=0
+g2=0
+g3=0
+g4=0
+c1=0
+c2=0
+c3=0
+c4=0
+d1=0
+d2=0
+d3=0
+d4=0
 
 // Evento para detectar cambios en los campos del formulario
 formularioJugadores.addEventListener('change', activarBotonIniciar)
@@ -327,30 +391,271 @@ botonSacarNum.addEventListener('click', () => {
     persona = infojugadores[i]
     for (var k=0; k<persona.Cartonjug.length; k++){
       if(persona.Cartonjug[k]==numB){
-        persona.Cartonjug[k]='0';
+        persona.Cartonjug[k]='X';
         k=persona.Cartonjug.length;
       }
     }
-    sumarpunt(infojugadores, tamanoCarton.value)
   }
+  infojugadores = generarfilcoldiag(tamanoCarton.value, infojugadores)
+
+
+  ptofila1= filaBingo(infojugadores[0].filas, tamanoCarton.value);
+  if(g1==0){
+    g1=ptofila1;
+    sum1 = g1
+  }
+  else{
+    if(ptofila1 != g1){
+      sum1 = g1 + (ptofila1 - g1)
+      g1 = ptofila1 
+    }
+    else{
+      sum1=0
+    }
+
+  }
+  puntajejug1 = infojugadores[0].puntaje
+  punt1 = puntajejug1+sum1
+  infojugadores[0].puntaje = punt1
+
+
+  ptofila2= filaBingo(infojugadores[1].filas, tamanoCarton.value);
+  if(g2==0){
+    g2=ptofila2;
+    sum2 = g2
+  }
+  else{
+    if(ptofila2 != g2){
+      sum2 = g2 + (ptofila2 - g2)
+      g2 = ptofila2 
+    }
+    else{
+      sum2=0
+    }
+
+  }
+  puntajejug2 = infojugadores[1].puntaje
+  punt2 = puntajejug2+sum2
+  infojugadores[1].puntaje = punt2
+
+
+  ptofila3= filaBingo(infojugadores[2].filas, tamanoCarton.value);
+  if(g3==0){
+    g3=ptofila3;
+    sum3 = g3 
+  }
+  else{
+    if(ptofila3 != g3){
+      sum3 = g3 + (ptofila3 - g3)
+      g3 = ptofila3 
+    }
+    else{
+      sum3=0
+    }
+
+  }
+  puntajejug3 = infojugadores[2].puntaje
+  punt3 = puntajejug3+sum3
+  infojugadores[2].puntaje = punt3
+
+  ptofila4= filaBingo(infojugadores[3].filas, tamanoCarton.value);
+  if(g4==0){
+    g4=ptofila4;
+    sum4 = g4
+  }
+  else{
+    if(ptofila4 != g4){
+      sum4 = g4 + (ptofila4 - g4)
+      g4 = ptofila4 
+    }
+    else{
+      sum4=0
+    }
+
+  }
+  puntajejug4 = infojugadores[3].puntaje
+  punt4 = puntajejug4+sum4
+  infojugadores[3].puntaje = punt4
+
+
+
+  
+  ptocolum1 = columBingo(infojugadores[0].columnas, tamanoCarton.value)
+  if(c1==0){
+    c1=ptocolum1;
+    sum1 = c1
+  }
+  else{
+    if(ptocolum1 != c1){
+      sum1 = c1 + (ptocolum1 - c1)
+      c1 = ptocolum1 
+    }
+    else{
+      sum1=0
+    }
+
+  }
+  puntajejug1 = infojugadores[0].puntaje
+  punt1 = puntajejug1+sum1
+  infojugadores[0].puntaje = punt1
+
+  ptocolum2 = columBingo(infojugadores[1].columnas, tamanoCarton.value)
+
+  if(c2==0){
+    c2=ptocolum2;
+    sum2 = c2
+  }
+  else{
+    if(ptocolum2 != c2){
+      sum2 = c2 + (ptocolum2 - c2)
+      c2 = ptocolum2 
+    }
+    else{
+      sum2=0
+    }
+
+  }
+  puntajejug2 = infojugadores[1].puntaje
+  punt2 = puntajejug2+sum2
+  infojugadores[1].puntaje = punt2
+
+  ptocolum3 = columBingo(infojugadores[2].columnas, tamanoCarton.value)
+  if(c3==0){
+    c3=ptocolum3;
+    sum3 = c3
+  }
+  else{
+    if(ptocolum3 != c3){
+      sum3 = c3 + (ptocolum3 - c3)
+      c3 = ptocolum3 
+    }
+    else{
+      sum3=0
+    }
+
+  }
+  puntajejug3 = infojugadores[2].puntaje
+  punt3 = puntajejug3+sum3
+  infojugadores[2].puntaje = punt3
+
+  ptocolum4 = columBingo(infojugadores[3].columnas, tamanoCarton.value)
+  if(c4==0){
+    c4=ptocolum4;
+    sum4 = c4
+  }
+  else{
+    if(ptocolum4 != c4){
+;
+      sum4 = c4 + (ptocolum4 - c4)
+      c4 = ptocolum4 
+    }
+    else{
+      sum4=0
+    }
+
+  }
+  puntajejug4 = infojugadores[3].puntaje
+  punt4 = puntajejug4+sum4
+  infojugadores[3].puntaje = punt4
+
+  ptodiag1= diagBingo(infojugadores[0].diagonales, tamanoCarton.value);
+  if(d1==0){
+    d1=ptodiag1;
+    sum1 = d1
+  }
+  else{
+    if(ptodiag1 != d1){
+      sum1 = d1 + (ptodiag1 - d1)
+      d1 = ptodiag1 
+    }
+    else{
+      sum1=0
+    }
+
+  }
+  puntajejug1 = infojugadores[0].puntaje
+  punt1 = puntajejug1+sum1
+  infojugadores[0].puntaje = punt1
+
+
+  ptodiag2= diagBingo(infojugadores[1].diagonales, tamanoCarton.value);
+  if(d2==0){
+    d2=ptodiag2;
+    sum2 = d2
+  }
+  else{
+    if(ptodiag2 != d2){
+      sum2 = d2 + (ptodiag2 - d2)
+      d2 = ptodiag2 
+    }
+    else{
+      sum2=0
+    }
+
+  }
+  puntajejug2 = infojugadores[1].puntaje
+  punt2 = puntajejug2+sum2
+  infojugadores[1].puntaje = punt2
+
+  ptodiag3= diagBingo(infojugadores[2].diagonales, tamanoCarton.value);
+  if(d3==0){
+    d3=ptodiag3;
+    sum3 = d3
+  }
+  else{
+    if(ptodiag3 != d3){
+      sum3 = d3 + (ptodiag3 - d3)
+      d3 = ptodiag3 
+    }
+    else{
+      sum3=0
+    }
+
+  }
+  puntajejug3 = infojugadores[2].puntaje
+  punt3 = puntajejug3+sum3
+  infojugadores[2].puntaje = punt3
+
+  ptodiag4= diagBingo(infojugadores[3].diagonales, tamanoCarton.value);
+  if(d4==0){
+    d4=ptodiag4;
+    sum4 = d4
+  }
+  else{
+    if(ptodiag4 != d4){
+      sum4 = d4 + (ptodiag4 - d4)
+      d4 = ptodiag1 
+    }
+    else{
+      sum4=0
+    }
+
+  }
+  puntajejug4 = infojugadores[3].puntaje
+  punt4 = puntajejug4+sum4
+  infojugadores[3].puntaje = punt4
+
 
 
   if(j1==true){
     document.querySelector(".game").innerHTML = '';
     generarCartonVisual(infojugadores[0].Cartonjug);
-    
+    document.getElementById('numero-puntaje').innerHTML = infojugadores[0].puntaje;
   }
   if(j2==true){
     document.querySelector(".game").innerHTML = '';
     generarCartonVisual(infojugadores[1].Cartonjug);
+    document.getElementById('numero-puntaje').innerHTML = infojugadores[1].puntaje;
   }
   if(j3==true){
     document.querySelector(".game").innerHTML = '';
     generarCartonVisual(infojugadores[2].Cartonjug);
+    document.getElementById('numero-puntaje').innerHTML = infojugadores[2].puntaje;
   }
   if(j4==true){
     document.querySelector(".game").innerHTML = '';
     generarCartonVisual(infojugadores[3].Cartonjug);
+    document.getElementById('numero-puntaje').innerHTML = infojugadores[3].puntaje;
   }
 
 

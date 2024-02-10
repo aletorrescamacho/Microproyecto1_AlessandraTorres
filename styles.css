@@ -1,17 +1,38 @@
 h1 {
     text-align: center;
+    font-family: Arial Black; 
+  font-weight: bold; font-size: 30px; 
+  background: #832877; 
+  -webkit-background-clip: text; 
+  -moz-background-clip: text; 
+  background-clip: text; 
+  color: transparent; 
+  text-shadow: 0px 3px 3px rgba(255,255,255,0.4),0px -1px 1px rgba(0,0,0,0.3);
+  text-transform: uppercase;
+      
   }
    
+  body{
+    background-color: #f8edf3;
+    width: 100%;
+    height: 100%;
+
+  }
   #formulario-jugadores {
     margin: 20px auto;
     max-width: 500px;
     padding: 20px;
-    border: 1px solid #ccc;
+    border: 4px solid #8d1456;
     border-radius: 10px;
+
   }
   
   h2 {
     margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #8d1456;
+
   }
   
   label {
@@ -31,7 +52,7 @@ h1 {
     width: 40px;
   }
   
-  #boton-iniciar, #boton-ranking, #boton-sacarnum, #boton-jugador1, #boton-jugador2, #boton-jugador3, #boton-jugador4 {
+  #boton-iniciar, #boton-ranking, #boton-sacarnum, #boton-jugador1, #boton-jugador2, #boton-jugador3, #boton-jugador4, #boton-reiniciar {
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 16px;
@@ -108,14 +129,13 @@ h1 {
     margin: auto;
   }
 
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 500px) {
     .pinkbox, #ver-cartones-contenedor {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     }
   }
-
 
 
 
@@ -130,12 +150,13 @@ h1 {
     padding: 5px;
     background: rgb(233, 210, 214);
     color: #333;
+    background-image: url(./fondo.png)
 
   }
 
   #a {
     position: fixed;
-    top: 70px;
+    top: 60px;
     left: 70%;
     background-color: rgb(233, 210, 214);
     width: 150px;
@@ -154,7 +175,7 @@ h1 {
     border: 1px solid #8d1456;
     height: 300px;
     width: 150px;
-    top: 170px;
+    top: 130px;
 
   }
 
@@ -164,17 +185,27 @@ h1 {
     width: 100%;
   }
 
+  #boton-reiniciar {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    right: 20px;
+    top: 350px;
+    height: 40px;
+    width: 180px;
+    padding: 10px;}
+
   .container{
     position: fixed;
     left: 40%;
-    top: 80px;
+    top: 6dvh;
     transform: translateX(-50%);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 20px;
-    background-color: beige;
+    background-color: rgb(240, 224, 224);
     padding: 40px 40px;
   }
 
@@ -224,5 +255,8 @@ h1 {
     font-size: 1.5em;
     background-color: #c26b9b;
   }
+
+
+ 
 
 
