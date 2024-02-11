@@ -8,6 +8,24 @@ const botonJug4 = document.getElementById('boton-jugador4');
 const items = document.getElementById('game');
 infojugadores = 0;
 cartonCompleto = false;
+const botonRein = document.getElementById('boton-reiniciar');
+
+
+
+
+
+function obtenerPosicionMayorPuntaje(listaDiccionarios) {
+  let mayorPuntaje = -Infinity;
+  let posicionMayor = -1;
+  for (let i = 0; i < listaDiccionarios.length; i++) {
+    if (listaDiccionarios[i].puntaje > mayorPuntaje) {
+      mayorPuntaje = listaDiccionarios[i].puntaje;
+      posicionMayor = i;
+    }
+  }
+  return posicionMayor;
+}
+
 
 
 
@@ -98,6 +116,9 @@ function changeNum(){
     document.getElementById('numero-ronda').innerHTML = "";
     document.getElementById('titulo-ronda').innerHTML = "Partida terminada";
     Ocultar(document.getElementById('boton-sacarnum'))
+
+
+
 
     if(cartonCompleto){
       document.getElementById('numero-ronda').innerHTML = "";
@@ -280,8 +301,9 @@ function columBingo(jug1colum, tamanoCarton){
 
 // Evento para iniciar la partida
 botonIniciar.addEventListener('click', () => {
+  const tabla = document.querySelector('#tablita'); // Obtener la tabla
+  tabla.style.display = 'none'; // Ocultar la tabla
     nombres = obtenerNombresJugadores()
-    window.alert(nombres);
     mostrarBotonNum()
     mostrar()
     tamanoCarton = formularioJugadores.querySelector("#tamano-carton");
@@ -406,8 +428,9 @@ botonSacarNum.addEventListener('click', () => {
   }
   else{
     if(ptofila1 != g1){
-      sum1 = g1 + (ptofila1 - g1)
+      sum1 = g1 + (ptofila1 - g1)-1
       g1 = ptofila1 
+
     }
     else{
       sum1=0
@@ -426,7 +449,7 @@ botonSacarNum.addEventListener('click', () => {
   }
   else{
     if(ptofila2 != g2){
-      sum2 = g2 + (ptofila2 - g2)
+      sum2 = g2 + (ptofila2 - g2)-1
       g2 = ptofila2 
     }
     else{
@@ -446,7 +469,7 @@ botonSacarNum.addEventListener('click', () => {
   }
   else{
     if(ptofila3 != g3){
-      sum3 = g3 + (ptofila3 - g3)
+      sum3 = g3 + (ptofila3 - g3)-1
       g3 = ptofila3 
     }
     else{
@@ -465,7 +488,7 @@ botonSacarNum.addEventListener('click', () => {
   }
   else{
     if(ptofila4 != g4){
-      sum4 = g4 + (ptofila4 - g4)
+      sum4 = g4 + (ptofila4 - g4)-1
       g4 = ptofila4 
     }
     else{
@@ -487,7 +510,7 @@ botonSacarNum.addEventListener('click', () => {
   }
   else{
     if(ptocolum1 != c1){
-      sum1 = c1 + (ptocolum1 - c1)
+      sum1 = c1 + (ptocolum1 - c1)-1
       c1 = ptocolum1 
     }
     else{
@@ -507,7 +530,7 @@ botonSacarNum.addEventListener('click', () => {
   }
   else{
     if(ptocolum2 != c2){
-      sum2 = c2 + (ptocolum2 - c2)
+      sum2 = c2 + (ptocolum2 - c2)-1
       c2 = ptocolum2 
     }
     else{
@@ -526,7 +549,7 @@ botonSacarNum.addEventListener('click', () => {
   }
   else{
     if(ptocolum3 != c3){
-      sum3 = c3 + (ptocolum3 - c3)
+      sum3 = c3 + (ptocolum3 - c3)-1
       c3 = ptocolum3 
     }
     else{
@@ -546,7 +569,7 @@ botonSacarNum.addEventListener('click', () => {
   else{
     if(ptocolum4 != c4){
 ;
-      sum4 = c4 + (ptocolum4 - c4)
+      sum4 = c4 + (ptocolum4 - c4)-1
       c4 = ptocolum4 
     }
     else{
@@ -565,7 +588,7 @@ botonSacarNum.addEventListener('click', () => {
   }
   else{
     if(ptodiag1 != d1){
-      sum1 = d1 + (ptodiag1 - d1)
+      sum1 = d1 + (ptodiag1 - d1)-1
       d1 = ptodiag1 
     }
     else{
@@ -585,7 +608,7 @@ botonSacarNum.addEventListener('click', () => {
   }
   else{
     if(ptodiag2 != d2){
-      sum2 = d2 + (ptodiag2 - d2)
+      sum2 = d2 + (ptodiag2 - d2)-1
       d2 = ptodiag2 
     }
     else{
@@ -604,7 +627,7 @@ botonSacarNum.addEventListener('click', () => {
   }
   else{
     if(ptodiag3 != d3){
-      sum3 = d3 + (ptodiag3 - d3)
+      sum3 = d3 + (ptodiag3 - d3)-1
       d3 = ptodiag3 
     }
     else{
@@ -623,7 +646,7 @@ botonSacarNum.addEventListener('click', () => {
   }
   else{
     if(ptodiag4 != d4){
-      sum4 = d4 + (ptodiag4 - d4)
+      sum4 = d4 + (ptodiag4 - d4)-1
       d4 = ptodiag1 
     }
     else{
@@ -713,3 +736,52 @@ botonJug4.addEventListener('click', () => {
   generarCartonVisual(infojugadores[3].Cartonjug)
 });
   
+
+const dicLocal = {
+  jug1: {nombre: 'Jugador 1',
+  victorias: 0, 
+  puntaje: 0},
+  
+  jug2: {nombre: 'Jugador 2',
+  victorias: 0, 
+  puntaje: 0},
+  
+  jug3: {nombre: 'Jugador 3',
+  victorias: 0, 
+  puntaje: 0},
+  
+  jug4: {nombre: 'Jugador 4',
+  victorias: 0, 
+  puntaje: 0}
+  
+  }
+  const dicLocalJSON = JSON.stringify(dicLocal)
+  localStorage.setItem("dicJug", dicLocalJSON);
+
+botonRein.addEventListener('click', () => {
+
+
+  const dicJSON = localStorage.getItem("dicJug");
+  const reconvDic = JSON.parse(dicJSON);
+  var ganador = obtenerPosicionMayorPuntaje(infojugadores)
+  if(ganador == 0){
+    reconvDic['jug1']['victorias'] += 1;
+  }
+  else if(ganador == 1){
+    reconvDic['jug2']['victorias'] += 1;
+  }
+  else if(ganador == 2){
+    reconvDic['jug3']['victorias'] += 1;
+  }
+  else{
+    reconvDic['jug4']['victorias'] += 1;
+  }
+
+  reconvDic['jug1']['puntaje'] += infojugadores[0].puntaje;
+  reconvDic['jug2']['puntaje'] += infojugadores[1].puntaje;
+  reconvDic['jug3']['puntaje'] += infojugadores[2].puntaje;
+  reconvDic['jug4']['puntaje'] += infojugadores[3].puntaje;
+
+  const upDic = JSON.stringify(reconvDic);
+  localStorage.setItem("dicJug", upDic)
+});
